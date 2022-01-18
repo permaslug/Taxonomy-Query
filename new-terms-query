@@ -1,0 +1,21 @@
+<?php
+$terms = get_terms( array(
+    'taxonomy' => 'brands',
+    'hide_empty' => false,
+) );
+$html = '';
+if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+    $html.= '<div class="brands-terms">';
+    foreach ( $terms as $term ) {
+      
+        $image_url = get_field( 'brand_logo_image', $term );
+       
+        $image_html = '<img src="' . esc_url( $image_url ) .'" alt="' . $term->name . '"/>';
+
+        $html .= '<div class="brands-item"><a href="' . esc_url( get_term_link( $term->term_id ) ) . '">' . $image_html . '<h2 class="heading-h2 brand-heading">' . esc_html( $term->name ) . '"</h2></a></div>';      
+      
+    }
+    $html .= '</div>';
+}
+echo $html; 
+?>
